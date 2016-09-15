@@ -1,0 +1,50 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Sep 13, 2016, 3:56:58 PM
+    Author     : campitos
+*/
+
+pre {
+    overflow: auto;
+    color: white;
+    background: #000000;
+    padding: 0;
+    font-size: 1.2rem;
+    font-family: Menlo, Monaco, monospace;
+    -moz-tab-size: 2;
+    -o-tab-size: 2;
+    tab-size: 2;
+    position: relative;
+}
+
+pre[rel] {
+    padding-top: 33px;
+}
+
+pre[rel]:before {
+    content: attr(rel);
+    color:#000000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #CCCCCC;
+    font-family: 'Gotham Rounded A', 'Gotham Rounded B', sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    padding: 5px 0;
+    text-indent: 15px;
+}
+
+pre code {
+    font-family: Menlo, Monaco, monospace;
+    background: none;
+    padding: 15px;
+    white-space: pre;
+    overflow: auto;
+    display: block;
+}

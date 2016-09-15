@@ -172,50 +172,47 @@
                 clase.
                 
             <pre class="prettyprint">
-                #--------------------------------------------------
-#PUERTO HTTP
-#-------------------------------------------------------
-server.port=9090
+               using UnityEngine;
+using System.Collections;
 
-# ===============================
-# Del datasource
-# ===============================
+public class MovimientoMouse : MonoBehaviour {
+    public float rapidez = 2.0f;
+	// Use this for initialization
+    float rotarX=0;
 
-# S
+        public enum RotacionEjes
+    {
+        MouseXY=0,
+        MouseX=1,
+        MouseY=2
+    }
 
-# Mysql
-spring.datasource.url = jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull
+    public RotacionEjes ejes = RotacionEjes.MouseX;
+	void Start () {
+       
+	}
+	
+	// Update is called once per frame
+	void Update () {
+        // transform.Rotate(0, rapidez, 0);
+        if (ejes == RotacionEjes.MouseX)
+        {
+            transform.Rotate(0, Input.GetAxis("Mouse X") * 2, 0);
+        }
+        else if (ejes == RotacionEjes.MouseY)
+        {
+            rotarX -= Input.GetAxis("Mouse Y") * 2;
+            Debug.Log("miuan");
+            rotarX = Mathf.Clamp(rotarX, -40, 40);
+            float rotarY = transform.localEulerAngles.y;
+            transform.localEulerAngles = new Vector3(rotarX, rotarY, 0);
+        }
+        else
+        {
 
-#Oracle
-#spring.datasource.url = jdbc:oracle:thin:@localhost:1521:orcl
-
-# Usuario y password para mysql
-spring.datasource.username = root
-
-#Para Wamp Server comentar el password, si es que no lo tiene 
-#spring.datasource.password = root
-
-# Usuario y password para oracle
-#spring.datasource.username = system
-#spring.datasource.password = system
-
-# Para mantener la conexion activa en produccion
-spring.datasource.testWhileIdle = true
-spring.datasource.validationQuery = SELECT 1
-
-# ===============================
-# = JPA / HIBERNATE
-# ===============================
-
-spring.jpa.show-sql = true
-# Este es para que hibernate haga un update ante las operaciones
-
-
-# Estrategia de nombre de JPA
-spring.jpa.hibernate.naming-strategy = org.hibernate.cfg.ImprovedNamingStrategy
-
-# Asignando el dialecto de la abse de datos. en este caso es para MySQL
-spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5Dialect
+        }
+    }
+}
             </pre>
 
             <p>En el siguiente paso generamos la siguiente clase</p>

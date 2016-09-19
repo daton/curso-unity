@@ -219,32 +219,31 @@ public class MovimientoMouse : MonoBehaviour {
 }
             </pre>
 
-            <p>En el siguiente paso generamos la siguiente clase</p>
+            <p>En el siguiente paso vamos a generar la siguiente clase para detectar
+             las teclas de las flechas y asi trasladarnos, el codigo es el siguiente</p>
            <pre class="prettyprint">  
-                  /**
- *
- * @author campitos
- */
-@SpringUI
-@Theme("valo")
-public class MiUi extends UI {
+                  using UnityEngine;
+using System.Collections;
 
-    @Override
-    protected void init(VaadinRequest request) {
-    final VerticalLayout layout=new VerticalLayout();
-    Label label=new Label("Hola, Bienvenido a JAVA web con Vaadin");
-    Button botn=new Button("Este es un boton nuevo que se pueden programar");
-    botn.addStyleName(ValoTheme.BUTTON_DANGER);
-    layout.addComponent(label);
-    layout.addComponent(botn);
-        setContent(layout);
-    
+public class MovimientoTraslacion : MonoBehaviour {
+    float rapidez = 2.0f;
+	// Use this for initialization
+	void Start () {
+	
+	}
+	
+	// Update is called once per frame
+	void Update () {
+        float deltaX = Input.GetAxis("Horizontal") * rapidez;
+        float deltaZ = Input.GetAxis("Vertical") * rapidez;
+        transform.Translate(deltaX, 0, deltaZ);
     }
-    
 }
-               </pre>
 
-        </p>
+ 
+               </pre>
+            <p>El el siguiente paso vamos a hacernos caso de la deteccion d colisiones</p>
+        
 
     </div>
 

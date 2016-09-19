@@ -209,7 +209,11 @@ public class MovimientoMouse : MonoBehaviour {
         }
         else
         {
-
+            rotarX -= Input.GetAxis("Mouse Y") * rapidez;
+            rotarX = Mathf.Clamp(rotarX, -45, 60);
+            float deltax = Input.GetAxis("Mouse X") * rapidez;
+            float rotarY = transform.localEulerAngles.y + deltax;
+            transform.localEulerAngles = new Vector3(rotarX, rotarY, 0);  
         }
     }
 }

@@ -222,23 +222,33 @@ public class MovimientoMouse : MonoBehaviour {
             <p>En el siguiente paso vamos a generar la siguiente clase para detectar
              las teclas de las flechas y asi trasladarnos, el codigo es el siguiente</p>
            <pre class="prettyprint">  
-                  using UnityEngine;
+                using UnityEngine;
 using System.Collections;
 
 public class MovimientoTraslacion : MonoBehaviour {
-    float rapidez = 2.0f;
-	// Use this for initialization
+    float rapidez = 3.0f;
+    // Use this for initialization
+    private CharacterController caracter;
 	void Start () {
-	
+        caracter = GetComponent<CharacterController>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        float deltaX = Input.GetAxis("Horizontal") * rapidez;
-        float deltaZ = Input.GetAxis("Vertical") * rapidez;
-        transform.Translate(deltaX, 0, deltaZ);
+       float deltax = Input.GetAxis("Horizontal");
+        float deltaz = Input.GetAxis("Vertical");
+        // transform.Translate(deltax, 0, deltaz);
+        Vector3 movimiento = new Vector3(deltax, 0, deltaz);
+
+        movimiento = Vector3.ClampMagnitude(movimiento, rapidez);
+        movimiento *= Time.deltaTime;
+        movimiento = transform.TransformDirection(movimiento);
+
+        caracter.Move(movimiento);
+
     }
 }
+
 
  
                </pre>

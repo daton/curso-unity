@@ -165,141 +165,41 @@
             De alli vamos a seleccionar Web, JPA, DevTools y Vaadin
             </p>
 
-            <h3 class="text-muted text-center">Desarrollo</h3>
+            <h3 class="text-muted text-center">Juego memorara</h3>
             <p class="text-justify">
-                Una vez descargadas las dependencias descomprimimos el archivo y lo abrimos directamente en Netbeans, de allí
-                Posteriormente  vamos a configurar una clase que nos servirá de enlace para nuestra interfaz de usuario para ello deberás de crear la siguiente
-                clase.
-                
+            <h3>Cambiar size a 3.8</h3>
+            <h3>Cambiar background a negro</h3>
+            <h3>Posicionar la camara en 0,0,-100</h3>
+            <h3>Poner posicion de mesa en 0,0, 5</h3>
+            <h3>Poner carta luna en -3,1,0</h3>
+            <h3>Poner carta abajo en 0,0,-0.1 y que sea hija de luna</h3>
+            <h3>Agregar Physics 2d Box Collider 2D a la luna</h3>
+            <p>Agregar el siguiente script</p>
             <pre class="prettyprint">
-               using UnityEngine;
-using System.Collections;
-
-public class MovimientoMouse : MonoBehaviour {
-    public float rapidez = 2.0f;
-	// Use this for initialization
-    float rotarX=0;
-
-        public enum RotacionEjes
-    {
-        MouseXY=0,
-        MouseX=1,
-        MouseY=2
-    }
-
-    public RotacionEjes ejes = RotacionEjes.MouseX;
-	void Start () {
-       
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        // transform.Rotate(0, rapidez, 0);
-        if (ejes == RotacionEjes.MouseX)
-        {
-            transform.Rotate(0, Input.GetAxis("Mouse X") * 2, 0);
-        }
-        else if (ejes == RotacionEjes.MouseY)
-        {
-            rotarX -= Input.GetAxis("Mouse Y") * 2;
-            Debug.Log("miuan");
-            rotarX = Mathf.Clamp(rotarX, -40, 40);
-            float rotarY = transform.localEulerAngles.y;
-            transform.localEulerAngles = new Vector3(rotarX, rotarY, 0);
-        }
-        else
-        {
-            rotarX -= Input.GetAxis("Mouse Y") * rapidez;
-            rotarX = Mathf.Clamp(rotarX, -45, 60);
-            float deltax = Input.GetAxis("Mouse X") * rapidez;
-            float rotarY = transform.localEulerAngles.y + deltax;
-            transform.localEulerAngles = new Vector3(rotarX, rotarY, 0);  
-        }
-    }
-}
-            </pre>
-
-            <p>En el siguiente paso vamos a generar la siguiente clase para detectar
-             las teclas de las flechas y asi trasladarnos, el codigo es el siguiente</p>
-           <pre class="prettyprint">  
-                using UnityEngine;
-using System.Collections;
-
-public class MovimientoTraslacion : MonoBehaviour {
-    float rapidez = 3.0f;
-    // Use this for initialization
-    private CharacterController caracter;
-	void Start () {
-        caracter = GetComponent<CharacterController>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-       float deltax = Input.GetAxis("Horizontal");
-        float deltaz = Input.GetAxis("Vertical");
-        // transform.Translate(deltax, 0, deltaz);
-        Vector3 movimiento = new Vector3(deltax, 0, deltaz);
-
-        movimiento = Vector3.ClampMagnitude(movimiento, rapidez);
-        movimiento *= Time.deltaTime;
-        movimiento = transform.TransformDirection(movimiento);
-
-        caracter.Move(movimiento);
-
-    }
-}
-
-
- 
-               </pre>
-            <p>El el siguiente paso vamos a hacernos caso de la deteccion d colisiones</p>
-            
-            <h2>Enemigos</h2>
-            <p>Codigo de los enemigos</p>
-            <pre class="prettyprint">
-                using UnityEngine;
-using System.Collections;
-
-public class Disparador : MonoBehaviour {
-    Camera camara;
-   
-
+           
+public class CartaMemorama : MonoBehaviour {
+    [SerializeField] private GameObject cartaAbajo;
 	// Use this for initialization
 	void Start () {
-        camara = GetComponent<Camera>();
- //Parte 2 indicador de cursor
-    Cursor.lockState=CursorLockMode.Locked;
-	}
-	public void OnGUI()
-    {
-        int size = 12;
-        float posX = camara.pixelWidth / 2 - size / 4;
-        float posY = camara.pixelHeight / 2 - size / 2;
-        GUI.Label(new Rect(posX, posY, size, size), "*");
-    }
-	// Update is called once per frame
-	void Update () {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector3 punto = new Vector3(camara.pixelWidth / 2, camara.pixelHeight / 2, 0);
-            Ray rayo = camara.ScreenPointToRay(punto);
-            RaycastHit hit;
-            if(Physics.Raycast(rayo, out hit))
-            {
-                Debug.Log("Hit en "+hit.point);
-                StartCoroutine(IndicadorEsferico(hit.point));
-            }
-        }
 	
 	}
-    private IEnumerator IndicadorEsferico(Vector3 pos)
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
+
+    public void OnMouseDown()
     {
-        GameObject esfera = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        esfera.transform.position = pos;
-        yield return new WaitForSeconds(1);
-        Destroy(esfera);
+        Debug.Log("Bajo");
+        if (cartaAbajo.activeSelf)
+        {
+            cartaAbajo.SetActive(false);
+        }
+
     }
 }
+
 
             </pre>
 
